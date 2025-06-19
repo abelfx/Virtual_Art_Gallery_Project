@@ -10,7 +10,6 @@ import { setupRendering } from "./modules/rendering.js";
 import { setupEventListeners } from "./modules/eventListeners.js";
 import { addObjectsToScene } from "./modules/sceneHelpers.js";
 import { setupPlayButton } from "./modules/menu.js";
-import { setupAudio } from "./modules/audioGuide.js";
 import { clickHandling } from "./modules/clickHandling.js";
 import { setupVR } from "./modules/VRSupport.js";
 import { loadStatueModel, addStatueInteractions } from "./modules/statue.js";
@@ -26,10 +25,6 @@ const initializeGallery = async () => {
 
     // Setup scene with improved camera controls
     let { camera, controls, renderer } = setupScene();
-
-    if (loadingText) loadingText.textContent = "Loading audio system...";
-    // Setup audio guide
-    setupAudio(camera);
 
     if (loadingText)
       loadingText.textContent = "Creating gallery environment...";
@@ -89,8 +84,6 @@ const initializeGallery = async () => {
     console.log("- Space: Toggle auto-rotation");
     console.log("- R: Reset camera position");
     console.log("- ESC/M: Show menu");
-    console.log("- G: Start audio guide");
-    console.log("- H: Stop audio guide");
     console.log("- Click on paintings: View information");
     console.log("- Click on Nefertiti bust: Toggle animation");
     console.log("- Click on statues: Navigate and view detailed information");
