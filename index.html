@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtual Art Gallery</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <div class="loading-content">
+        <h2>Loading Virtual Art Gallery...</h2>
+        <div class="loading-spinner"></div>
+        <p id="loading-text">Initializing 3D scene...</p>
+      </div>
+    </div>
+
+    <!-- Error Screen -->
+    <div id="error-screen" style="display: none;">
+      <div class="error-content">
+        <h2>⚠️ Error Loading Gallery</h2>
+        <p id="error-message">An error occurred while loading the gallery.</p>
+        <button onclick="location.reload()">Retry</button>
+      </div>
+    </div>
+
+    <!-- Main UI -->
+    <div id="ui-container">
+      <!-- Menu -->
+      <div id="menu" class="menu">
+        <h1>Virtual Art Gallery</h1>
+        <p>Welcome to the interactive 3D art gallery</p>
+        <button id="play-button">Enter Gallery</button>
+        <div class="controls-info">
+          <h3>Controls:</h3>
+          <ul>
+            <li><strong>Mouse:</strong> Orbit camera</li>
+            <li><strong>WASD/Arrows:</strong> Move camera</li>
+            <li><strong>Q/E:</strong> Rotate camera</li>
+            <li><strong>+/-:</strong> Zoom in/out</li>
+            <li><strong>Space:</strong> Toggle auto-rotation</li>
+            <li><strong>R:</strong> Reset camera</li>
+            <li><strong>ESC/M:</strong> Show menu</li>
+            <li><strong>Click:</strong> Interact with objects</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Info Panel -->
+      <div id="info-panel" class="info-panel collapsed">
+        <div class="info-header">
+          <h3>Artwork Information</h3>
+          <button id="toggle-info">Hide</button>
+        </div>
+        <div class="info-content">
+          <h4 id="painting-title">Title</h4>
+          <p id="painting-artist">Artist</p>
+          <p id="painting-description">Description</p>
+          <p id="painting-year">Year</p>
+        </div>
+      </div>
+
+      <!-- Painting Info (for compatibility) -->
+      <div id="painting-info" class="painting-info"></div>
+
+      <!-- Audio Controls -->
+      <div id="audio-controls" class="audio-controls">
+        <button id="start_audio">Start Audio Guide</button>
+        <button id="stop_audio">Stop Audio Guide</button>
+      </div>
+
+      <!-- About Overlay -->
+      <div id="about-overlay" class="overlay">
+        <div class="overlay-content">
+          <h2>About Virtual Art Gallery</h2>
+          <p>This is an interactive 3D art gallery built with Three.js. Explore the gallery using your mouse and keyboard controls.</p>
+          <p>Features include:</p>
+          <ul>
+            <li>Realistic 3D environment with lighting</li>
+            <li>Interactive paintings and sculptures</li>
+            <li>Multiple Ethiopian cultural artifacts</li>
+            <li>Physics-based particle effects</li>
+            <li>Post-processing visual effects</li>
+            <li>Audio guide system</li>
+            <li>VR support</li>
+          </ul>
+          <button id="close-about">Close</button>
+        </div>
+      </div>
+
+      <!-- About Button -->
+      <button id="about_button" class="about-button">About</button>
+    </div>
+
+    <script type="module" src="main.js"></script>
+    
+    <!-- Error Handling Script -->
+    <script>
+      // Global error handler
+      window.addEventListener('error', function(event) {
+        console.error('Global error:', event.error);
+        showError('An error occurred: ' + event.error.message);
+      });
+
+      // Unhandled promise rejection handler
+      window.addEventListener('unhandledrejection', function(event) {
+        console.error('Unhandled promise rejection:', event.reason);
+        showError('Loading error: ' + event.reason);
+      });
+
+      function showError(message) {
+        document.getElementById('loading-screen').style.display = 'none';
+        document.getElementById('error-screen').style.display = 'flex';
+        document.getElementById('error-message').textContent = message;
+      }
+
+      function hideLoading() {
+        document.getElementById('loading-screen').style.display = 'none';
+      }
+
+      // Expose to global scope for main.js to use
+      window.hideLoading = hideLoading;
+      window.showError = showError;
+    </script>
+  </body>
+</html>
