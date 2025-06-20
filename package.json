@@ -1,8 +1,8 @@
 {
-  "repository": "https://github.com/theringsofsaturn/3D-art-gallery",
+  "repository": " https://github.com/abelfx/Virtual_Art_Gallery_Project.git",
   "author": {
-    "name": "Emilian Kasemi",
-    "email": "emiliankasemi@gmail.com"
+    "name": "Group 10"
+   
   },
   "scripts": {
     "dev": "vite",

@@ -47,7 +47,7 @@ export const updateMovement = (delta, controls, camera, walls) => {
     direction.y = 0; // Keep movement horizontal
     direction.normalize();
     const rightVector = new THREE.Vector3();
-    rightVector.crossVectors(camera.up, direction);
+    rightVector.crossVectors(direction, camera.up);
     movement.add(rightVector.multiplyScalar(moveSpeed));
   }
   if (keysPressed.ArrowLeft || keysPressed.a) {
@@ -57,7 +57,7 @@ export const updateMovement = (delta, controls, camera, walls) => {
     direction.y = 0; // Keep movement horizontal
     direction.normalize();
     const rightVector = new THREE.Vector3();
-    rightVector.crossVectors(camera.up, direction);
+    rightVector.crossVectors(direction, camera.up);
     movement.add(rightVector.multiplyScalar(-moveSpeed));
   }
 
@@ -76,6 +76,16 @@ export const updateMovement = (delta, controls, camera, walls) => {
     if (controls && controls.target) {
       controls.target.sub(movement);
     }
+  }
+
+  // Hard clamp: Prevent camera from escaping the room even if collision fails
+  camera.position.x = Math.max(-18, Math.min(18, camera.position.x));
+  camera.position.y = Math.max(1, Math.min(9, camera.position.y));
+  camera.position.z = Math.max(-18, Math.min(18, camera.position.z));
+  if (controls && controls.target) {
+    controls.target.x = Math.max(-18, Math.min(18, controls.target.x));
+    controls.target.y = Math.max(1, Math.min(9, controls.target.y));
+    controls.target.z = Math.max(-18, Math.min(18, controls.target.z));
   }
 };
 

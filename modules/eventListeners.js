@@ -1,22 +1,10 @@
 import { keysPressed } from "./movement.js"; // import the keysPressed object
 import { showMenu, hideMenu } from "./menu.js"; // import the showMenu function
-import { startAudio, stopAudio } from "./audioGuide.js";
 
 export const setupEventListeners = (controls, camera, scene) => {
   // Add keyboard event listeners
   document.addEventListener("keydown", (event) => onKeyDown(event, controls), false);
   document.addEventListener("keyup", (event) => onKeyUp(event, controls), false);
-
-  // Add event listeners for the audio guide buttons
-  const startAudioBtn = document.getElementById("start_audio");
-  const stopAudioBtn = document.getElementById("stop_audio");
-  
-  if (startAudioBtn) {
-    startAudioBtn.addEventListener("click", startAudio);
-  }
-  if (stopAudioBtn) {
-    stopAudioBtn.addEventListener("click", stopAudio);
-  }
 
   // Add UI event listeners
   setupUIEventListeners();
@@ -43,14 +31,6 @@ function onKeyDown(event, controls) {
     case " ":
       // Toggle auto-rotation
       controls.autoRotate = !controls.autoRotate;
-      break;
-      
-    case "g":
-      startAudio();
-      break;
-      
-    case "h":
-      stopAudio();
       break;
       
     case "r":

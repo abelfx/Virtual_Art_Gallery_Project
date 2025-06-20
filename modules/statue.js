@@ -7,37 +7,43 @@ export const statues = [];
 
 // Function to navigate camera to a specific position
 export const navigateToObject = (camera, controls, targetPosition, targetRotation = null) => {
-  // Check if controls and controls.target exist
   if (!controls || !controls.target) {
     console.warn("Controls or controls.target is undefined. Navigation skipped.");
     return;
   }
 
-  // Store original position for smooth transition
   const originalPosition = camera.position.clone();
   const originalTarget = controls.target.clone();
   
-  // Calculate target camera position (slightly offset from object)
-  const offset = new THREE.Vector3(0, 2, 5);
-  const targetCameraPosition = targetPosition.clone().add(offset);
-  
-  // Animate camera movement
-  const duration = 2000; // 2 seconds
+  // Calculate offset direction: from object toward room center (0, y, 0)
+  const center = new THREE.Vector3(0, targetPosition.y, 0);
+  let direction = center.clone().sub(targetPosition).normalize();
+  if (direction.length() === 0) direction = new THREE.Vector3(0, 0, -1); // fallback
+  const offset = direction.multiplyScalar(5).add(new THREE.Vector3(0, 2, 0));
+  let targetCameraPosition = targetPosition.clone().add(offset);
+
+  // Clamp camera position to stay inside the room (x/z in [-18, 18], y in [1, 9])
+  targetCameraPosition.x = Math.max(-18, Math.min(18, targetCameraPosition.x));
+  targetCameraPosition.y = Math.max(1, Math.min(9, targetCameraPosition.y));
+  targetCameraPosition.z = Math.max(-18, Math.min(18, targetCameraPosition.z));
+
+  // Clamp target position as well
+  let clampedTarget = targetPosition.clone();
+  clampedTarget.x = Math.max(-18, Math.min(18, clampedTarget.x));
+  clampedTarget.y = Math.max(0, Math.min(9, clampedTarget.y));
+  clampedTarget.z = Math.max(-18, Math.min(18, clampedTarget.z));
+
+  const duration = 2000;
   const startTime = Date.now();
   
   const animateCamera = () => {
     const elapsed = Date.now() - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    
-    // Smooth easing function
     const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     const easedProgress = easeInOutCubic(progress);
     
-    // Interpolate camera position
     camera.position.lerpVectors(originalPosition, targetCameraPosition, easedProgress);
-    
-    // Interpolate controls target
-    controls.target.lerpVectors(originalTarget, targetPosition, easedProgress);
+    controls.target.lerpVectors(originalTarget, clampedTarget, easedProgress);
     controls.update();
     
     if (progress < 1) {
@@ -52,12 +58,22 @@ export const loadStatueModel = (scene, camera, controls) => {
   const gltfLoader = new GLTFLoader();
   const gui = new GUI();
 
+  // Evenly distribute statues across the gallery area (x/z in [-15, 15])
+  const gridPositions = [
+    { x: -10, z: -10 },
+    { x:  10, z: -10 },
+    { x: -10, z:  10 },
+    { x:  10, z:  10 },
+    { x:   0, z:   0 },
+  ];
+  let gridIndex = 0;
+
   // Model configurations with real-world scaling, positioning, and detailed descriptions
   const modelConfigs = [
     {
       name: "Australopithecus Afarensis (Lucy)",
       path: "/models/statue/australopithecus_afarensis_lucycrane_et_mand..glb",
-      position: { x: 0, y: 0, z: 0 }, // Center position
+      position: gridPositions[gridIndex++] || { x: 0, y: 0, z: 0 },
       scale: 1.5,
       rotation: { x: 0, y: 0, z: 0 },
       realWorldHeight: 1.2,
@@ -70,24 +86,9 @@ export const loadStatueModel = (scene, camera, controls) => {
       location: "Afar Region, Ethiopia"
     },
     {
-      name: "Lalibela Rock-Hewn Churches",
-      path: "/models/statue/lalibela.glb",
-      position: { x: -15, y: 0, z: -15 },
-      scale: 1.2,
-      rotation: { x: 0, y: Math.PI / 4, z: 0 },
-      realWorldHeight: 2.0,
-      rotationSpeed: 0.3,
-      animationType: "rotate",
-      description: "The rock-hewn churches of Lalibela are among the most remarkable architectural achievements of medieval Ethiopia. Carved directly into solid rock in the 12th-13th centuries, these 11 churches represent a unique form of monolithic architecture. The complex includes the famous Church of St. George (Bete Giyorgis), shaped like a cross.",
-      historicalContext: "Built during the reign of King Lalibela (1181-1221), these churches were created as a 'New Jerusalem' for Ethiopian Christians who could not make the pilgrimage to the Holy Land due to Muslim conquests.",
-      significance: "UNESCO World Heritage site representing the pinnacle of Ethiopian rock-cut architecture and religious devotion.",
-      era: "12th-13th century",
-      location: "Lalibela, Amhara Region, Ethiopia"
-    },
-    {
       name: "Mystical Snake Statue",
       path: "/models/statue/snake_statue.glb",
-      position: { x: 15, y: 0, z: -15 },
+      position: gridPositions[gridIndex++] || { x: 0, y: 0, z: 0 },
       scale: 1.5,
       rotation: { x: 0, y: -Math.PI / 4, z: 0 },
       realWorldHeight: 1.5,
@@ -102,7 +103,7 @@ export const loadStatueModel = (scene, camera, controls) => {
     {
       name: "Ibex Statue from Berlin Tierpark",
       path: "/models/statue/ibex_statue_scan_-_berlin_-_tierpark.glb",
-      position: { x: -12, y: 0, z: 12 },
+      position: gridPositions[gridIndex++] || { x: 0, y: 0, z: 0 },
       scale: 1.0,
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
       realWorldHeight: 1.8,
@@ -117,7 +118,7 @@ export const loadStatueModel = (scene, camera, controls) => {
     {
       name: "Traditional Ethiopian Shield",
       path: "/models/statue/ethiopian_shield_a.1958.5.2.glb",
-      position: { x: 12, y: 0, z: 12 },
+      position: gridPositions[gridIndex++] || { x: 0, y: 0, z: 0 },
       scale: 1.3,
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
       realWorldHeight: 1.2,
@@ -132,7 +133,7 @@ export const loadStatueModel = (scene, camera, controls) => {
     {
       name: "Traditional Coffee Cup (Jebena)",
       path: "/models/statue/ethiopian_coffee_cup.glb",
-      position: { x: 0, y: 0, z: 18 },
+      position: gridPositions[gridIndex++] || { x: 0, y: 0, z: 0 },
       scale: 2.0,
       rotation: { x: 0, y: 0, z: 0 },
       realWorldHeight: 0.8,
@@ -240,6 +241,12 @@ export const loadStatueModel = (scene, camera, controls) => {
           statue.scale.copy(statueData.originalScale);
         }
       }, "resetPosition").name("Reset Position");
+
+      // Attach config data to the statue's userData for mapping
+      statue.userData = {
+        type: "statue",
+        info: config
+      };
 
       console.log(`${config.name} loaded. Actual height: ${newSize.y.toFixed(2)} units`);
     }, 
