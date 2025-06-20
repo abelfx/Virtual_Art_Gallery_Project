@@ -30,7 +30,14 @@ An immersive 3D virtual art gallery built with **Three.js**, highlighting Ethiop
 
 - **Demo 1**: [https://virtual-art-gallery-project.vercel.app](https://virtual-art-gallery-project.vercel.app)  
 - **Demo 2**: [https://virtual-art-gallery-project-git-main-abelfxs-projects.vercel.app](https://virtual-art-gallery-project-git-main-abelfxs-projects.vercel.app)  
-- **Demo 3**: [https://virtual-art-gallery-project-owfxqnf31-abelfxs-projects.vercel.app](https://virtual-art-gallery-project-owfxqnf31-abelfxs-projects.vercel.app)  
+- **Demo 3**: [https://virtual-art-gallery-project-owfxqnf31-abelfxs-projects.vercel.app](https://virtual-art-gallery-project-owfxqnf31-abelfxs-projects.vercel.app)
+  ![image](https://github.com/user-attachments/assets/6ff63800-6a44-4675-b591-41bac0446db7)
+  ![image](https://github.com/user-attachments/assets/5426354f-71f8-4729-ac8a-d2ae786e8f40)
+  ![image](https://github.com/user-attachments/assets/b4765041-44b0-4256-8893-a71114f3016b)
+  ![image](https://github.com/user-attachments/assets/e01c27a4-b057-4d8a-b9a6-8cd05b8646e9)
+
+
+
 
 ## GitHub Repository
 
