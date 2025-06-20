@@ -4,13 +4,11 @@
     "name": "Emilian Kasemi",
     "email": "emiliankasemi@gmail.com"
   },
-
-    "scripts": {
-      "dev": "vite",
-      "build": "vite build",
-      "preview": "vite preview"
-    },
-  
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "license": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International",
   "dependencies": {
     "@types/three": "^0.177.0",
@@ -22,6 +20,6 @@
     "three-stdlib": "^2.36.0"
   },
   "devDependencies": {
-    "vite": "^4.3.1"
+    "vite": "^6.3.5"
   }
 }
