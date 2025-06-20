@@ -127,6 +127,29 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ---
 
+
+## 🔮 Future Improvements
+
+- **Multiplayer Mode**: Enable multiple users to explore the gallery together in real time via WebRTC or WebSockets.
+- **Voice-Guided Tours**: Add audio narration for selected artworks, available in multiple languages.
+- **Dynamic Artwork Loading**: Integrate a backend or CMS to load new artworks and descriptions without redeployment.
+- **Accessibility Features**: Add screen reader support, captions, and adjustable font sizes for inclusive experience.
+- **Mobile Optimization**: Improve controls and performance on smartphones and tablets.
+- **Machine Learning**: Use AI to recommend art based on user interests and time spent near objects.
+
+---
+
+## 👥 Team Members
+
+| Name              | Student ID     | Section   |
+|-------------------|----------------|-----------|
+| ABEL TESFA        | UGR/3106/15    |    3      |
+| ALAZAR ANDUALEM   | UGR/4511/15    |    3      |
+| BETRETSION AKLILU | UGR/4566/15    |    3      |
+| BIRHANU SOLOMON   | UGR/9606/14    |    3      |
+| NAHOM ZENEBE      | UGR/0216/15    |    3      |
+---
+
 ## ❤️ About
 This project was created to promote and preserve Ethiopia's ancient history and cultural legacy through immersive 3D technology. From the rock-hewn churches of Lalibela to traditional coffee ceremonies and ancient sculptures, every artifact tells a story worth exploring.
 
