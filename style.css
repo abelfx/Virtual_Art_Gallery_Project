@@ -732,3 +732,7 @@ canvas {
 .menu.hidden {
   display: none;
 }
+/* Hide Three.js VRButton 'VR not supported' watermark */
+.vr-not-supported, .webxr-message, button[style*="z-index"][style*="position: absolute"] {
+  display: none !important;
+}
