@@ -74,7 +74,7 @@ export const loadStatueModel = (scene, camera, controls) => {
       name: "Australopithecus Afarensis (Lucy)",
       path: "/models/statue/australopithecus_afarensis_lucycrane_et_mand..glb",
       position: gridPositions[gridIndex++] || { x: 0, y: 0, z: 0 },
-      scale: 1.5,
+      scale: 3.0,
       rotation: { x: 0, y: 0, z: 0 },
       realWorldHeight: 1.2,
       rotationSpeed: 0.2,
@@ -166,9 +166,13 @@ export const loadStatueModel = (scene, camera, controls) => {
       const newSize = box.getSize(new THREE.Vector3());
       
       // Position on floor (y = 0 is floor level)
+      let yPos = newSize.y / 2;
+      if (config.name === "Australopithecus Afarensis (Lucy)") {
+        yPos = newSize.y / 3; // Lower Lucy closer to the ground
+      }
       statue.position.set(
         config.position.x,
-        newSize.y / 2, // Place bottom on floor
+        yPos, // Use adjusted y position
         config.position.z
       );
       
@@ -354,14 +358,19 @@ export const addStatueInteractions = (camera, scene, controls) => {
       if (clickedStatue) {
         // Navigate to the statue and show detailed info
         navigateToObject(camera, controls, clickedStatue.object.position);
-        showDetailedInfo(clickedStatue.config);
-        
+        // Update the main info panel for 3D models
+        const info = clickedStatue.config;
+        document.getElementById("painting-title").textContent = info.name || "3D Model";
+        document.getElementById("painting-artist").textContent = "Artist: " + (info.artist || "Dummy Artist");
+        document.getElementById("painting-description").textContent = "Description: " + (info.description || "This is a 3D model in the gallery. Dummy description.");
+        document.getElementById("painting-year").textContent = "Year: " + (info.year || "2024");
+        const infoPanel = document.getElementById("info-panel");
+        if (infoPanel) infoPanel.classList.remove("collapsed");
         // Add visual feedback
         clickedStatue.object.scale.setScalar(clickedStatue.originalScale.x * 1.2);
         setTimeout(() => {
           clickedStatue.object.scale.copy(clickedStatue.originalScale);
         }, 200);
-        
         console.log(`${clickedStatue.config.name} clicked! Showing detailed information.`);
       }
     }
