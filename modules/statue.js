@@ -7,44 +7,50 @@ export const statues = [];
 
 // Function to navigate camera to a specific position
 export const navigateToObject = (camera, controls, targetPosition, targetRotation = null) => {
-  // Check if controls and controls.target exist
   if (!controls || !controls.target) {
     console.warn("Controls or controls.target is undefined. Navigation skipped.");
     return;
   }
 
-  // Store original position for smooth transition
   const originalPosition = camera.position.clone();
   const originalTarget = controls.target.clone();
-  
-  // Calculate target camera position (slightly offset from object)
-  const offset = new THREE.Vector3(0, 2, 5);
-  const targetCameraPosition = targetPosition.clone().add(offset);
-  
-  // Animate camera movement
-  const duration = 2000; // 2 seconds
+
+  // Calculate offset direction: from object toward room center (0, y, 0)
+  const center = new THREE.Vector3(0, targetPosition.y, 0);
+  let direction = center.clone().sub(targetPosition).normalize();
+  if (direction.length() === 0) direction = new THREE.Vector3(0, 0, -1); // fallback
+  const offset = direction.multiplyScalar(5).add(new THREE.Vector3(0, 2, 0));
+  let targetCameraPosition = targetPosition.clone().add(offset);
+
+  // Clamp camera position to stay inside the room (x/z in [-18, 18], y in [1, 9])
+  targetCameraPosition.x = Math.max(-18, Math.min(18, targetCameraPosition.x));
+  targetCameraPosition.y = Math.max(1, Math.min(9, targetCameraPosition.y));
+  targetCameraPosition.z = Math.max(-18, Math.min(18, targetCameraPosition.z));
+
+  // Clamp target position as well
+  let clampedTarget = targetPosition.clone();
+  clampedTarget.x = Math.max(-18, Math.min(18, clampedTarget.x));
+  clampedTarget.y = Math.max(0, Math.min(9, clampedTarget.y));
+  clampedTarget.z = Math.max(-18, Math.min(18, clampedTarget.z));
+
+  const duration = 2000;
   const startTime = Date.now();
-  
+
   const animateCamera = () => {
     const elapsed = Date.now() - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    
-    // Smooth easing function
     const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     const easedProgress = easeInOutCubic(progress);
-    
-    // Interpolate camera position
+
     camera.position.lerpVectors(originalPosition, targetCameraPosition, easedProgress);
-    
-    // Interpolate controls target
-    controls.target.lerpVectors(originalTarget, targetPosition, easedProgress);
+    controls.target.lerpVectors(originalTarget, clampedTarget, easedProgress);
     controls.update();
-    
+
     if (progress < 1) {
       requestAnimationFrame(animateCamera);
     }
   };
-  
+
   animateCamera();
 };
 

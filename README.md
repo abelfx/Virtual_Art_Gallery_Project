@@ -161,4 +161,4 @@ This project was created to promote and preserve Ethiopia's ancient history and 
 - [WebXR API](https://immersive-web.github.io/webxr/)
 - [GLTF Format](https://github.com/KhronosGroup/glTF)
 
-Built with 🇪🇹 pride to showcase history in a digital world.
+    Built with 🇪🇹 pride to showcase history in a digital world.
