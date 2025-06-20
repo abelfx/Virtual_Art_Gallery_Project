@@ -14,7 +14,6 @@ import { clickHandling } from "./modules/clickHandling.js";
 import { setupVR } from "./modules/VRSupport.js";
 import { loadStatueModel, addStatueInteractions } from "./modules/statue.js";
 import { loadCeilingLampModel } from "./modules/ceilingLamp.js";
-import { loadNefertitiBust } from "./modules/nefertitiBust.js";
 
 // Error handling wrapper
 const initializeGallery = async () => {
@@ -56,7 +55,6 @@ const initializeGallery = async () => {
     // Load 3D models with camera and controls for navigation
     loadStatueModel(scene, camera, controls);
     loadCeilingLampModel(scene);
-    loadNefertitiBust(scene);
 
     if (loadingText) loadingText.textContent = "Setting up interactions...";
     // Setup statue interactions with camera and controls
