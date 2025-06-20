@@ -104,7 +104,7 @@ export const loadStatueModel = (scene, camera, controls) => {
       name: "Ibex Statue from Berlin Tierpark",
       path: "/models/statue/ibex_statue_scan_-_berlin_-_tierpark.glb",
       position: gridPositions[gridIndex++] || { x: 0, y: 0, z: 0 },
-      scale: 1.0,
+      scale: 3.0,
       rotation: { x: 0, y: Math.PI / 2, z: 0 },
       realWorldHeight: 1.8,
       rotationSpeed: 0.2,
@@ -116,19 +116,19 @@ export const loadStatueModel = (scene, camera, controls) => {
       location: "Ethiopian Highlands"
     },
     {
-      name: "Traditional Ethiopian Shield",
-      path: "/models/statue/ethiopian_shield_a.1958.5.2.glb",
+      name: "Integration Sculpture",
+      path: "/models/statue/integration_sculpture.glb",
       position: gridPositions[gridIndex++] || { x: 0, y: 0, z: 0 },
-      scale: 1.3,
+      scale: 3.0,
       rotation: { x: 0, y: -Math.PI / 2, z: 0 },
       realWorldHeight: 1.2,
       rotationSpeed: 0.5,
       animationType: "spin",
-      description: "This traditional Ethiopian shield represents the rich martial traditions of Ethiopia. Made from leather and decorated with intricate patterns, such shields were used by Ethiopian warriors throughout history, including during the resistance against Italian colonization.",
-      historicalContext: "Ethiopian shields have a long history dating back to ancient times, with different regions developing distinct styles and decorative patterns.",
-      significance: "Symbolizes Ethiopian military traditions and the country's successful resistance against European colonization.",
-      era: "19th-20th century",
-      location: "Ethiopian Highlands"
+      description: "This sculpture represents the theme of integration and unity, symbolizing the coming together of diverse elements into a harmonious whole.",
+      historicalContext: "Integration sculptures are often used in public spaces to celebrate unity and collaboration among communities.",
+      significance: "Symbolizes the importance of integration and collective progress in society.",
+      era: "Contemporary",
+      location: "Ethiopia"
     },
     {
       name: "Traditional Coffee Cup (Jebena)",
